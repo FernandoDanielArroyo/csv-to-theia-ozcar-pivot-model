@@ -143,7 +143,7 @@ Nom du champ | Description des valeurs | optionel | exemple
 |Calibration|Champs de texte libre précisant des informations sur la calibration du catpeur physique.|oui||
 |ModelName|Nom du capteur virtuel|oui||
 |ModelName|Champ de texte libre précisant les informations sur la parametrisation du capteur virtuel|oui||
-|Documents|Liste d'éléments permettant de décrire des documents. Chaque élément représente un type de document, soit **publication**, soit **manual**, et l'url du document séparé par un **":"**|oui|publication@http://dx.doi.org/10.1080/02626667.2014.885654|
+|Documents|Liste d'éléments permettant de décrire des documents. Chaque élément représente un type de document, soit **publication**, soit **manual**, et l'url du document séparé par un **"@"**|oui|publication@http://dx.doi.org/10.1080/02626667.2014.885654|
 
 ### additional_values.csv
 
