@@ -20,6 +20,8 @@ La documentation complète du modèle pivot et de son implémentation pour mettr
 
 Dans les fichiers suivant, les valeurs des cellules peuvent prendre la forme de valeur unique ou de **liste** de valeur. Dans le cas de liste de valeurs, chaque élément de la liste correspond à une ligne dans la cellule et est terminé par un **underscore (_)**.
 
+Chaque champ descriptif doit être **renseigné en anglais**.
+
 ### producer.csv
 
 Nom du champ | Description des valeurs | optionel | exemple
