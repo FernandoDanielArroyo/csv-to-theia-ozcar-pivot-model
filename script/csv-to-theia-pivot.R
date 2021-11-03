@@ -26,6 +26,17 @@ rm(fileName, csvFileNames)
 # 2 - Class declaration
 #################################
 
+#OnlineResource class definition
+setClass(
+  "OnlineResource",
+  slots = list(
+    urlDownload = "character",
+    urlInfo = "character",
+    doi = "character",
+    webservices = "list"
+  )
+)
+
 #Producer class definition
 setClass(
   "Producer",
@@ -38,7 +49,8 @@ setClass(
     measuredVariables = "character",
     fundings = "list",
     email = "character",
-    contacts = "list"
+    contacts = "list",
+    onlineResource = "OnlineResource"
   )
 )
 
@@ -116,17 +128,6 @@ setClass("Document", slots = list(type = "character",
 setClass("Webservice",
          slots = list(description = "character",
                       url = "character"))
-
-#OnlineResource class definition
-setClass(
-  "OnlineResource",
-  slots = list(
-    urlDownload = "character",
-    urlInfo = "character",
-    doi = "character",
-    webservices = "list"
-  )
-)
 
 #Metadata class definition
 setClass(
@@ -424,20 +425,20 @@ setContactUsingIdentifier <-
         "dataManager" = "Data manager",
         "dataCollector" = "Data collector"
       )
-        return(
-          new(
-            "Contact",
-            firstName = contactDataFrame$FirstName[index],
-            lastName = contactDataFrame$LastName[index],
-            email = contactDataFrame$Email[index],
-            role = role,
-            orcId = contactDataFrame$ORCID[index],
-            organisation = setOrganisationUsingIdentifier(
-              contactDataFrame$OrganisationIdentifier[index],
-              organisationDataFrame
-            )
+      return(
+        new(
+          "Contact",
+          firstName = contactDataFrame$FirstName[index],
+          lastName = contactDataFrame$LastName[index],
+          email = contactDataFrame$Email[index],
+          role = role,
+          orcId = contactDataFrame$ORCID[index],
+          organisation = setOrganisationUsingIdentifier(
+            contactDataFrame$OrganisationIdentifier[index],
+            organisationDataFrame
           )
         )
+      )
     }
   }
 
@@ -477,9 +478,9 @@ setTemporalExtentUsingSlashSeparatedString <- function(slashSeparatedString) {
   if(is.na(str_detect(slashSeparatedString,"\\/"))){
     return(NULL)
   } else {
-  return(new("TemporalExtent",
-             dateBeg=str_match(slashSeparatedString,"(.*?)\\/")[,2],
-             dateEnd=str_match(slashSeparatedString,"\\/(.*)")[,2]))
+    return(new("TemporalExtent",
+               dateBeg=str_match(slashSeparatedString,"(.*?)\\/")[,2],
+               dateEnd=str_match(slashSeparatedString,"\\/(.*)")[,2]))
   }
 }
 
@@ -505,7 +506,7 @@ setObservedPropertyUsingIdentifier <- function(identifier, observedPropertyDataF
              theiaCategories = as.list(underscore_LF_separated_string_to_vector(
                observedPropertyDataFrame$TheiaCategories[index]
              ))
-         ))
+  ))
 }
 
 #' The function load a String identifier and a dataframe containing different
@@ -527,11 +528,11 @@ setFeatureOfInterestUsingIdentifier <- function(identifier, samplingFeatureDataF
     return(
       new("FeatureOfInterest",
           samplingFeature = fromJSON(
-      gsub("^\\{", paste("{\n \"properties\": {},\n \"name\": \"",paste(samplingFeatureDataFrame$Name[index],"\",")), toJSON(wkt2geojson(
-        gsub("Z \\(", "Z\\(", gsub("^(.*?)\\:", "", samplingFeatureDataFrame$Geometry[index])))
-      )))))
+            gsub("^\\{", paste("{\n \"properties\": {},\n \"name\": \"",paste(samplingFeatureDataFrame$Name[index],"\",")), toJSON(wkt2geojson(
+              gsub("Z \\(", "Z\\(", gsub("^(.*?)\\:", "", samplingFeatureDataFrame$Geometry[index])))
+            )))))
   }
-
+  
 }
 
 #' The function load a String composed of two elements, the first
@@ -575,18 +576,18 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
   activityPeriods = str_match(identifier,pattern = "\\[(.*?)\\]")[,2]
   documents = underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])
   if (!is.na(sensorDataFrame$SensorType[index])){
-  return(new("Sensor",
-             model=sensorDataFrame$Model[index],
-             manufacturer=sensorDataFrame$Manufacturer[index],
-             serialNumber=sensorDataFrame$SerialNumber[index],
-             sensorType=sensorDataFrame$SensorType[index],
-             calibration=sensorDataFrame$Calibration[index],
-             documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString),
-             activityPeriods = lapply(as.list(strsplit(activityPeriods,"\\,")[[1]]),setTemporalExtentUsingSlashSeparatedString),
-             name=as.character(NA),
-             parametrisationDescription=as.character(NA)
-             ))
-
+    return(new("Sensor",
+               model=sensorDataFrame$Model[index],
+               manufacturer=sensorDataFrame$Manufacturer[index],
+               serialNumber=sensorDataFrame$SerialNumber[index],
+               sensorType=sensorDataFrame$SensorType[index],
+               calibration=sensorDataFrame$Calibration[index],
+               documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString),
+               activityPeriods = lapply(as.list(strsplit(activityPeriods,"\\,")[[1]]),setTemporalExtentUsingSlashSeparatedString),
+               name=as.character(NA),
+               parametrisationDescription=as.character(NA)
+    ))
+    
   } else if(!is.na(sensorDataFrame$ModelName[index])){
     return(new("Sensor",
                name=sensorDataFrame$ModelName[index],
@@ -611,7 +612,7 @@ setDocumentsUsingAtSeperatedString <-  function(AtSeparatedString) {
   return(new("Document",
              type=gsub("\\@(.*)","",AtSeparatedString),
              url=gsub("^(.*?)\\@","",AtSeparatedString))
-         )
+  )
 }
 
 
@@ -635,7 +636,7 @@ setAdditionalValueUsingIdentifier <- function(identifier, additionalValuesDataFr
              columnName=as.character(additionalValuesDataFrame$NameInDatafile[index]),
              unit=as.character(additionalValuesDataFrame$Unit[index]),
              description=as.character(additionalValuesDataFrame$Description[index])
-             ))
+  ))
 }
 
 #' The function load a String composed of two elements, the first
@@ -653,6 +654,58 @@ setQualityFlagsUsingBracketSeparatedString <- function(bracketSeparatedString) {
              code=gsub("\\[(.*?)\\]","",bracketSeparatedString)))
 }
 
+#' The function load a list of String representing online resources.
+#' Each element of the list is built such as:
+#' http:typeOfOnlieResouce@URLOfTheOnlineResource
+#' The different types of online resource are, info, download, doi, and webservice
+#' For webservice type, a description of the webservice is mandatory. Hence, the 
+#' webservices elements are built such as:
+#' http:webservice[description]@URLOfTheWebservice
+#' @param urlList list online resource string
+#' @return A S4 OnlineResource object
+#' @export
+setOnlineResourceUsingURLList <- function(urlList) {
+  onlineResourceObject <- new("OnlineResource")
+  webservicecount <- 1
+  webserviceCSVList <- vector(mode = "list",
+                              length = sum(str_count(urlList,"webservice")))
+  
+  for (i in (1:length(urlList))) {
+    ### get charactère string between http: and @  = type of onlineresource
+    urlType <- str_match(urlList[i], "^http\\:(.*?)\\@")[,2]
+    ### switch on the type of online resource
+    switch(
+      urlType,
+      #-------------------------------
+      # simple + unique string pattern
+      #-------------------------------
+      "info" = {
+        onlineResourceObject@urlInfo <- gsub("(.*?)\\@", "", urlList[i])
+      },
+      "download" = {
+        onlineResourceObject@urlDownload <- gsub("(.*?)\\@", "", urlList[i])
+      },
+      "doi" = {
+        onlineResourceObject@doi <- gsub("(.*?)\\@(http|https)\\:\\/\\/dx\\.doi\\.org\\/", "", urlList[i])
+      },
+      # default case for webservices
+      {
+        if(gsub("\\[(.*?)]", "", urlType) == "webservice"){
+          webserviceCSVList[[webservicecount]] <- 
+            new(
+              "Webservice",
+              description = str_match(urlType, "\\[(.*?)\\]")[,2],
+              url = gsub("^(.*?)\\@", "", urlList[i])
+            )
+          webservicecount <-  webservicecount + 1
+        }
+      }
+    )
+  }
+  onlineResourceObject@webservices <- webserviceCSVList
+  return(onlineResourceObject)
+}
+
 
 
 # 4 - Extract producer metadata
@@ -664,6 +717,7 @@ CSVproducerContactIdentfier <-
 ### get producer funding identifiers
 CSVproducerFunderIdentifier <-
   underscore_LF_separated_string_to_vector(producer$Funders)
+
 
 ### for each contact identifier from the producer csv the corresponding contact
 ### information are loaded from the contacts csv and stored in Contact S4 object
@@ -683,21 +737,23 @@ for (i in (1:length(CSVproducerFunderIdentifier))) {
     setFundingUsingIdentifier(CSVproducerFunderIdentifier[i], organisations)
 }
 
+
 ###Store the producer metadata in the Pivot object
 pivotObject <- new("Pivot",
-    version="1.0",
-    producer= new(
-  "Producer",
-  producerId = producer$Identifier,
-  name = producer$Name,
-  title = producer$Title,
-  description = producer$Description,
-  objectives = as.character(producer$Objective),
-  measuredVariables = as.character(producer$MeasuredVariable),
-  email = as.character(producer$Email),
-  fundings = fundingList,
-  contacts = contactList
-))
+                   version="1.0",
+                   producer= new(
+                     "Producer",
+                     producerId = producer$Identifier,
+                     name = producer$Name,
+                     title = producer$Title,
+                     description = producer$Description,
+                     objectives = as.character(producer$Objective),
+                     measuredVariables = as.character(producer$MeasuredVariable),
+                     email = as.character(producer$Email),
+                     fundings = fundingList,
+                     contacts = contactList,
+                     onlineResource = setOnlineResourceUsingURLList(underscore_LF_separated_string_to_vector(producer$OnlineResource))
+                   ))
 rm(
   contactList,
   fundingList,
@@ -730,7 +786,7 @@ for (indexDat in 1:nrow(datasets)) {
   CSVdatasetProvenance <-
     underscore_LF_separated_string_to_vector(datasets$Provenance[indexDat])
   
-### instanciate Metadata class and Dataset class
+  ### instanciate Metadata class and Dataset class
   datasetObject <-  new('Dataset',
                         datasetId=datasets$Identifier[indexDat])
   metadataObject <- new("Metadata")
@@ -755,11 +811,11 @@ for (indexDat in 1:nrow(datasets)) {
       gsub("\\:(.*)", "", CSVdatasetDescription[i]),
       "abstract" = {
         metadataObject@description <- 
-               gsub("^(.*?)\\:", "", CSVdatasetDescription[i])
+          gsub("^(.*?)\\:", "", CSVdatasetDescription[i])
       },
       "purpose" = {
         metadataObject@objective <- 
-               gsub("^(.*?)\\:", "", CSVdatasetDescription[i])
+          gsub("^(.*?)\\:", "", CSVdatasetDescription[i])
       }
     )
   }
@@ -782,10 +838,10 @@ for (indexDat in 1:nrow(datasets)) {
       },
       { 
         if(!is.na(CSVdatasetKeywords[i])){
-        keywordCSVList <-
-          c(keywordCSVList, strsplit(
-            gsub("^(.*?)\\:", "", CSVdatasetKeywords[i]), "\\,"
-          )[[1]])
+          keywordCSVList <-
+            c(keywordCSVList, strsplit(
+              gsub("^(.*?)\\:", "", CSVdatasetKeywords[i]), "\\,"
+            )[[1]])
         }
       }
     )
@@ -825,12 +881,12 @@ for (indexDat in 1:nrow(datasets)) {
   documentCount <- 1
   webservicecount <- 1
   documentCSVList <- vector(mode = "list", 
-  length = sum(str_count(CSVdatasetUrls,"publication|manual")) )
+                            length = sum(str_count(CSVdatasetUrls,"publication|manual")) )
   webserviceCSVList <- vector(mode = "list",
                               length = sum(str_count(CSVdatasetUrls,"webservice")))
   
   for (i in (1:length(CSVdatasetUrls))) {
-
+    
     urlType <- str_match(CSVdatasetUrls[i], "^http\\:(.*?)\\@")[,2]
     switch(
       urlType,
@@ -879,11 +935,11 @@ for (indexDat in 1:nrow(datasets)) {
           gsub("\\[(.*?)]", "", urlType),
           "licence" = {
             dataConstraintObject@licence <- 
-                   new(
-                     "Licence",
-                     title = str_match(urlType, "\\[(.*?)\\]")[,2],
-                     url = gsub("^(.*?)\\@", "", CSVdatasetUrls[i])
-                   )
+              new(
+                "Licence",
+                title = str_match(urlType, "\\[(.*?)\\]")[,2],
+                url = gsub("^(.*?)\\@", "", CSVdatasetUrls[i])
+              )
           },
           #-------------------------------
           # descriptive + multiple string pattern
@@ -961,8 +1017,8 @@ for (indexDat in 1:nrow(datasets)) {
     dataProductionObject <- NULL
     if(length(sensorList) < 0 || !is.na(datasetObservationsCSV$Method[indexObs])) {
       dataProductionObject <- new("DataProduction",
-          method=datasetObservationsCSV$Method[indexObs],
-          sensors = sensorList
+                                  method=datasetObservationsCSV$Method[indexObs],
+                                  sensors = sensorList
       )
     }
     rm(sensorList)
@@ -972,7 +1028,7 @@ for (indexDat in 1:nrow(datasets)) {
       procedureObject <- new("Procedure",
                              lineageInformations = lineageInformationList,
                              dataProduction = dataProductionObject
-                             )
+      )
     }
     observationObject@procedure <-  procedureObject
     rm(procedureObject,lineageInformationList,dataProductionObject)
@@ -987,10 +1043,10 @@ for (indexDat in 1:nrow(datasets)) {
       qualityFlagList <- lapply(underscore_LF_separated_string_to_vector(datasetObservationsCSV$QualityFlags[indexObs]),setQualityFlagsUsingBracketSeparatedString)
     }
     observationObject@result <-new("Result",
-        dataFile = new("DataFile",name = datasetObservationsCSV$DataFileName[indexObs]),
-        missingValue = as.character(datasetObservationsCSV$MissingValue[indexObs]),
-        qualityFlags = qualityFlagList,
-        additionalValues = additionalValueList
+                                   dataFile = new("DataFile",name = datasetObservationsCSV$DataFileName[indexObs]),
+                                   missingValue = as.character(datasetObservationsCSV$MissingValue[indexObs]),
+                                   qualityFlags = qualityFlagList,
+                                   additionalValues = additionalValueList
     )
     
     
@@ -1021,8 +1077,5 @@ rm(fileConn)
 # 8 - correct the json using some javascript code
 ##################################
 system("node correct_json.js")
+system("rm pivot.json")
 system(paste("mv pivot_corrected.json",paste(producer$Identifier,"_en.json",sep = "")))
-
-
-
-

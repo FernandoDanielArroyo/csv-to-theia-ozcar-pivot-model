@@ -1,4 +1,4 @@
-Identifier,Name,Title,Description,Objective,MeasuredVariable,Email,Contacts,Funders
+Identifier,Name,Title,Description,Objective,MeasuredVariable,Email,Contacts,Funders,OnlineResource
 CATC,AMMA-CATCH,"AMMA-CATCH: a hydrological, meteorological and ecological observatory on West Africa","AMMA-CATCH is a national observation service (SNO) dedicated to long-term monitoring of climatological, hydrological and ecological changes in West Africa. For this purpose, it gathers data from three densely instrumented sites, going back as far as the mid-1980s in the Sahelian part of the observation network. These three sites cover areas ranging between 10000 and 25000 km² and are located at different latitudes so as to sample the characteristic eco-climatic gradients of the region.","To provide insight into the interactions between the water cycle, vegetation dynamics and climate variability at intraseasonal and interannual scales over West Africa region that is highly vulnerable to the impacts of climate change.","Comprehensive water balance (rainfall, infiltration, groundwater recharge, surface runoff, evapotranspiration flux) and simultaneous monitoring of the vegetation cover and its phenology.",contact@amma-catch.org,"projectLeader:0000-0002-3100-8510_
 dataManager:veronique.chaffard@ird.fr","FrenchResearchInstitutes:180006025_
 FrenchResearchInstitutes:180089013_
@@ -15,4 +15,8 @@ OtherUniversitiesAndSchools:Université Abdou Moumouni_
 OtherUniversitiesAndSchools:Université de Maradi_
 OtherUniversitiesAndSchools:Université de Zinder_
 OtherUniversitiesAndSchools:Université des Sciences, des Techniques et des Technologies de Bamako_
-OtherUniversitiesAndSchools:Université d'Abomey-Calavi"
+OtherUniversitiesAndSchools:Université d'Abomey-Calavi","http:info@http://bd.amma-catch.org_
+http:download@http://bd.amma-catch.org/download.jsf?lang=fr&identifier=29&stations=850,851,847,996,848,849&variables=29&begin=&end=_
+http:doi@http://dx.doi.org/10.17178/AMMA-CATCH.CE.Run_Nct_
+http:webservice[CSW getCapabilities]@http://localhost:8080/geoserver/csw?service=csw&version=2.0.2&request=GetCapabilities_
+http:webservice[WMS getCapabilities]@http://sampleserver1.arcgisonline.com/ArcGIS/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/WMSServer?version=1.3.0&amp;request=GetCapabilities&amp;service=WMS"
