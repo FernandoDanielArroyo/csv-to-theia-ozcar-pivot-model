@@ -139,7 +139,7 @@ setContactUsingIdentifier <-
           lastName = contactDataFrame$LastName[index],
           email = contactDataFrame$Email[index],
           role = role,
-          orcId = contactDataFrame$ORCID[index],
+          orcId = as.character(contactDataFrame$ORCID[index]),
           organisation = setOrganisationUsingIdentifier(
             contactDataFrame$OrganisationIdentifier[index],
             organisationDataFrame
@@ -281,15 +281,19 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
       gsub("\\[(.*?)\\]","",identifier))
     )
   activityPeriods = str_match(identifier,pattern = "\\[(.*?)\\]")[,2]
-  documents = underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])
+  documents <- vector(mode = "list")
+  if (!is.na(sensorDataFrame$Documents)){
+    documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString)
+  }
+ 
   if (!is.na(sensorDataFrame$SensorType[index])){
     return(new("Sensor",
-               model=sensorDataFrame$Model[index],
-               manufacturer=sensorDataFrame$Manufacturer[index],
-               serialNumber=sensorDataFrame$SerialNumber[index],
-               sensorType=sensorDataFrame$SensorType[index],
-               calibration=sensorDataFrame$Calibration[index],
-               documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString),
+               model=as.character(sensorDataFrame$Model[index]),
+               manufacturer=as.character(sensorDataFrame$Manufacturer[index]),
+               serialNumber=as.character(sensorDataFrame$SerialNumber[index]),
+               sensorType=as.character(sensorDataFrame$SensorType[index]),
+               calibration=as.character(sensorDataFrame$Calibration[index]),
+               documents = documents,
                activityPeriods = lapply(as.list(strsplit(activityPeriods,"\\,")[[1]]),setTemporalExtentUsingSlashSeparatedString),
                name=as.character(NA),
                parametrisationDescription=as.character(NA)
@@ -299,7 +303,7 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
     return(new("Sensor",
                name=sensorDataFrame$ModelName[index],
                parametrisationDescription=sensorDataFrame$ModelParametrisationDescription[index],
-               documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString),
+               documents = documents,
                model=as.character(NA),
                manufacturer=as.character(NA),
                serialNumber=as.character(NA),
