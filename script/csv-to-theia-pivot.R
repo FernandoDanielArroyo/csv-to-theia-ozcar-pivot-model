@@ -8,15 +8,15 @@ library("wellknown")
 # 1 - Import all csv files into data.frames
 ##################################
 
-csvFileNames <- list.files(path = "../csv")
+csvFileNames <- list.files(path = "../csv-semi-colon")
 
 for (fileName in csvFileNames) {
   assign(
     sub('\\.csv$', '', fileName),
     read.csv(
-      paste("../csv", fileName, sep = "/"),
+      paste("../csv-semi-colon", fileName, sep = "/"),
       stringsAsFactors = FALSE,
-      sep = ",",
+      sep = ";",
       na.strings = c("NA", "")
     )
   )

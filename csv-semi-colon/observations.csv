@@ -1,0 +1,26 @@
+Identifier;ProcessingLevel;DataType;TemporalExtent;TimeSeries;LineageInformation;Method;ObservedProperty;Sensor;StationName;Dataset;DataFileName;MissingValue;QualityFlags;AdditionalValue
+CATC_OBS_CE.Run_Nct_1;Derived products;Numeric;2004-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;"[2004-12-31T23:40:00Z]The water table depth (WTD) is calculating according to the following equation: WTD=a*H_raw_clean+b where H_raw_clean is the water level measurement by the probe without the aberrant values, a=1 and b=-0.451. The data are integrated at half-hour frequency up to 04/17/2018, then 15 minutes frequency up to 05/31/2018 and then half-hour frequency._
+The water table depth (WTD) is calculating according to the following equation: WTD=a*H_raw_clean+b where H_raw_clean is the water level measurement by the probe without the aberrant values, a=1 and b=-0.451. The data are integrated at half-hour frequency up to 04/17/2018, then 15 minutes frequency up to 05/31/2018 and then half-hour frequency.";Automatic probe fro water temperature records in the Aven Mazauric.\nMeasurement type: automatic.;Discharge/Flow;;TONDIKIBORO_TKAMONT;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9999.9;"13[checked data]_
+11[missing value]_
+17[dry river]";delta
+CATC_OBS_CE.Run_Nct_2;Derived products;Numeric;2005-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;"ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z]_
+test[2019-06-19T10:14:00Z/2017-10-15T12:59:00Z,2020-10-16T12:59:00Z/2018-10-15T12:59:00Z]";TONDIKIBORO_TKAVAL;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9998.9;"14[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_CE.Run_Nct_3;Derived products;Numeric;2006-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z];TONDIKIBORO_TKBODO;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9997.9;"15[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_CE.Run_Nct_4;Derived products;Numeric;2007-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z];MELE HAOUSSA_MH1;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9996.9;"16[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_CE.Run_Nct_5;Derived products;Numeric;2008-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z];MELE HAOUSSA_MH2;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9995.9;"17[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_CE.Run_Nct_6;Derived products;Numeric;2009-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z];TONDIKIBORO_TKAMONT_E;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9994.9;"18[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_CE.Run_Nct_7;Derived products;Numeric;2010-06-11T15:49:00Z/2017-10-15T11:38:00Z;TRUE;;;Discharge/Flow;ThalimedesOTT[2016-06-19T10:14:00Z/2017-10-15T12:59:00Z,2017-10-16T12:59:00Z/2018-10-15T12:59:00Z];TONDIKIBORO_TKIBM;CATC_DAT_CE.Run_Nct;HPLU_OBS_ploemeur_chemistry_1.txt;-9993.9;"19[checked data]_
+11[missing value]_
+17[dry river]";
+CATC_OBS_AE.H2OFlux_Odc_1;;Numeric;2005-11-11T17:30:00Z/2012-12-31T23:30:00Z;TRUE;;;Air Temperature at height 5 m;;BELEFOUNGOU_FLUX;CATC_DAT_AE.H2OFlux_Odc;CATC_OBS_AE.H2OFlux_Odc_1.txt;;;
+CATC_OBS_AE.H2OFlux_Odc_2;;Numeric;2005-11-11T17:30:00Z/2012-12-31T23:30:00Z;TRUE;;;Standard Deviation of Wind Direction at height 18 m;;BELEFOUNGOU_FLUX;CATC_DAT_AE.H2OFlux_Odc;CATC_OBS_AE.H2OFlux_Odc_2.txt;;;
