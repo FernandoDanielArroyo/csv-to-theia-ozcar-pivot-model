@@ -14,7 +14,7 @@ Ce modèle contient les métadonnées permettant de décrire le "producteur" de 
 
 Pour plus d'information:https://theia-ozcar.gricad-pages.univ-grenoble-alpes.fr/doc-producer/producer-documentation.html#modele-de-donnees-pivot-description-et-implementation-en-json
 
-La documentation complète du modèle pivot et de son implémentation pour mettre en oeuvre l'échange d'information avec le système d'information Theia/OZCAR est disponible ici: https://theia-ozcar.gricad-pages.univ-grenoble-alpes.fr/doc-producer/_downloads/b57adda313eaf801d6ba4348ab86e8ea/description_champs_JSON_v1.1.pdf
+La documentation complète du modèle pivot et de son implémentation pour mettre en oeuvre l'échange d'information avec le système d'information Theia/OZCAR est disponible ici: https://theia-ozcar.gricad-pages.univ-grenoble-alpes.fr/doc-producer/_downloads/0fb4ee20ed11207bbd369b6e89261081/description_champs_JSON_v1.2.pdf
 
 ## Description des fichiers csv et des champs de métadonnées
 
@@ -122,6 +122,7 @@ Nom du champ | Description des valeurs | optionel | exemple
 |Unit|Unité de la propriété observée. Si la propriété observée est sans unité il faut renseigner "N/A"|non|°C|
 |Description|Description de la propriété observée.|oui|| 
 |TheiaCategories|Liste d'élément dont chaque  élément est une chaine  de  caractère représente une URI identifiant une catégorie de variable OZCAR/Theia (thésaurus publié en ligne :<br />http://in-situ.theia-land.fr/skosmos/theia_ozcar_thesaurus/en/) et permet  d'associer  le  nom  de  variable  producteur  à  la  taxonomie  de  catégorie  de variable  OZCAR/Theia. |non|https://w3id.org/ozcar-theia/wind |
+|Keywords|Liste des mots clés décrivant la propriété observée. Chaque élement de la liste est séparé par une **virgule**. Chaque élément de la liste peut contenir le mot clé et son uri si elle existe séparé par un **@**.|oui|Wind,Air temperature@http://google.fr|
 
 
 ### sampling_features.csv
