@@ -138,7 +138,8 @@ setClass(
     name = "character",
     unit = "character",
     description = "character",
-    theiaCategories = "list"
+    theiaCategories = "list",
+    keywords = "list"
   )
 )
 

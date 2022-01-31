@@ -1,4 +1,4 @@
-Identifier;Name;Unit;Description;TheiaCategories
-Discharge/Flow;Discharge/Flow;m3/s;une description de la variable;https://w3id.org/ozcar-theia/hydrologicalMeasurements
-Air Temperature at height 5 m;Air Temperature at height 5 m;°C;;https://w3id.org/ozcar-theia/atmosphericTemperature
-Standard Deviation of Wind Direction at height 18 m;Standard Deviation of Wind Direction at height 18 m;°;;https://w3id.org/ozcar-theia/wind
+Identifier;Name;Unit;Description;TheiaCategories;Keywords
+Discharge/Flow;Discharge/Flow;m3/s;une description de la variable;https://w3id.org/ozcar-theia/hydrologicalMeasurements;discharge,erosion,turbidity@http://google.fr
+Air Temperature at height 5 m;Air Temperature at height 5 m;°C;;https://w3id.org/ozcar-theia/atmosphericTemperature;
+Standard Deviation of Wind Direction at height 18 m;Standard Deviation of Wind Direction at height 18 m;°;;https://w3id.org/ozcar-theia/wind;

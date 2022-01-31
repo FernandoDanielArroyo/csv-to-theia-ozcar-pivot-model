@@ -206,13 +206,27 @@ setObservedPropertyUsingIdentifier <- function(identifier, observedPropertyDataF
       observedPropertyDataFrame$Identifier,
       identifier)
     )
+  
+  observedPropertyKeywordCSVList <- vector(mode = "list");
+  
+  observedPropertyKeywordCSVList <-
+    c(observedPropertyKeywordCSVList, strsplit(
+      observedPropertyDataFrame$Keywords[index], "\\,")[[1]]);
+  observedPropertyKeywordCSVList <- observedPropertyKeywordCSVList[!is.na(observedPropertyKeywordCSVList)];
+   keywordList <-
+     vector(mode = "list",
+            length = length(observedPropertyKeywordCSVList))
+  keywordList <- lapply(observedPropertyKeywordCSVList, setKeywordUsingAtSeparatedString);
+  
   return(new("ObservedProperty",
              name = observedPropertyDataFrame$Name[index],
              unit = observedPropertyDataFrame$Unit[index],
              description = observedPropertyDataFrame$Description[index],
              theiaCategories = as.list(underscore_LF_separated_string_to_vector(
                observedPropertyDataFrame$TheiaCategories[index]
-             ))
+             )),
+            keywords = keywordList
+             
   ))
 }
 

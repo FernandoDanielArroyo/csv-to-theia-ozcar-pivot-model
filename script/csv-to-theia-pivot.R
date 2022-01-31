@@ -172,7 +172,6 @@ for (indexDat in 1:nrow(datasets)) {
   # remove NA values from the list of keywords
   metadataObject@keywords <-
     lapply(keywordCSVList, setKeywordUsingAtSeparatedString)
-  
   rm(i, keywordCSVList, CSVdatasetKeywords)
   
   # d - dataset spatial coverage
