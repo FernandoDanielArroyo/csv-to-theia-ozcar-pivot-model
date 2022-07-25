@@ -296,7 +296,8 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
     )
   activityPeriods = str_match(identifier,pattern = "\\[(.*?)\\]")[,2]
   documents <- vector(mode = "list")
-  if (!is.na(sensorDataFrame$Documents)){
+  # (!is.na(sensorDataFrame$Documents)){
+  if ("Documents" %in% attributes(sensorDataFrame)$names){
     documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString)
   }
  

@@ -337,7 +337,7 @@ for (indexDat in 1:nrow(datasets)) {
     }
     ### dataProduction obect is decalred null if there is no method information and no sensor information
     dataProductionObject <- NULL
-    if(length(sensorList) < 0 || !is.na(datasetObservationsCSV$Method[indexObs])) {
+    if(length(sensorList) > 0 || !is.na(datasetObservationsCSV$Method[indexObs])) {
       dataProductionObject <- new("DataProduction",
                                   method=datasetObservationsCSV$Method[indexObs],
                                   sensors = sensorList
