@@ -208,26 +208,27 @@ setObservedPropertyUsingIdentifier <- function(identifier, observedPropertyDataF
     )
   
   observedPropertyKeywordCSVList <- vector(mode = "list");
-  
-  observedPropertyKeywordCSVList <-
-    c(observedPropertyKeywordCSVList, strsplit(
-      observedPropertyDataFrame$Keywords[index], "\\,")[[1]]);
-  observedPropertyKeywordCSVList <- observedPropertyKeywordCSVList[!is.na(observedPropertyKeywordCSVList)];
-   keywordList <-
-     vector(mode = "list",
-            length = length(observedPropertyKeywordCSVList))
-  keywordList <- lapply(observedPropertyKeywordCSVList, setKeywordUsingAtSeparatedString);
-  
-  return(new("ObservedProperty",
-             name = observedPropertyDataFrame$Name[index],
-             unit = observedPropertyDataFrame$Unit[index],
-             description = observedPropertyDataFrame$Description[index],
-             theiaCategories = as.list(underscore_LF_separated_string_to_vector(
-               observedPropertyDataFrame$TheiaCategories[index]
-             )),
-            keywords = keywordList
-             
-  ))
+  keywordList <- list()
+  if(length(observedPropertyKeywordCSVList) > 0) {
+    observedPropertyKeywordCSVList <-
+      c(observedPropertyKeywordCSVList, strsplit(
+        observedPropertyDataFrame$Keywords[index], "\\,")[[1]]);
+    observedPropertyKeywordCSVList <- observedPropertyKeywordCSVList[!is.na(observedPropertyKeywordCSVList)];
+    keywordList <-
+      vector(mode = "list",
+             length = length(observedPropertyKeywordCSVList))
+    keywordList <- lapply(observedPropertyKeywordCSVList, setKeywordUsingAtSeparatedString);
+  }
+    
+    return(new("ObservedProperty",
+               name = observedPropertyDataFrame$Name[index],
+               unit = observedPropertyDataFrame$Unit[index],
+               description = observedPropertyDataFrame$Description[index],
+               theiaCategories = as.list(underscore_LF_separated_string_to_vector(
+                 observedPropertyDataFrame$TheiaCategories[index]
+               )),
+               keywords = keywordList
+    ))
 }
 
 #' The function load a String identifier and a dataframe containing different
@@ -297,7 +298,7 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
   activityPeriods = str_match(identifier,pattern = "\\[(.*?)\\]")[,2]
   documents <- vector(mode = "list")
   # (!is.na(sensorDataFrame$Documents)){
-  if ("Documents" %in% attributes(sensorDataFrame)$names){
+  if (("Documents" %in% attributes(sensorDataFrame)$names) & (!is.na(sensorDataFrame$Documents))){
     documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString)
   }
  
