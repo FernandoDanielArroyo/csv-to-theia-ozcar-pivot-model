@@ -10,12 +10,16 @@
 #'  underscore_LF_separated_string_to_vector("email:charly.coussot@univ-grenoble-alpes.fr_\norcid:1111-0002-5870-5762")
 underscore_LF_separated_string_to_vector <-
   function(underscore_LF_separated_string) {
-    stringVector <-
-      unlist(strsplit(underscore_LF_separated_string, "\\_\n"))
-    for (i in (1:length(stringVector))) {
-      stringVector[i] <- gsub('\\_$', '', stringVector[i])
+    if(!is.na(underscore_LF_separated_string)){
+      stringVector <-
+        unlist(strsplit(underscore_LF_separated_string, "\\_\n"))
+      for (i in (1:length(stringVector))) {
+        stringVector[i] <- gsub('\\_$', '', stringVector[i])
+      }
+      return(stringVector)
+    } else {
+      return(NULL)
     }
-    return(stringVector)
   }
 
 #' The function load an identifier and a data frame that represents organisations.
@@ -35,6 +39,9 @@ setOrganisationUsingIdentifier <-
         organisationDataFrame$Identifier,
         gsub("^(.*?)\\:", "", identifier)
       ))
+    if(length(index) > 1) {
+      stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in organisations.csv"))
+    } 
     if (!is.na(index)) {
       roleCSV <- gsub("\\:(.*)", "", identifier)
       role <- switch (
@@ -73,6 +80,9 @@ setFundingUsingIdentifier <-
         organisationDataFrame$Identifier,
         gsub("^(.*?)\\:", "", identifier)
       ))
+    if(length(index) > 1) {
+      stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in organisations.csv"))
+    } 
     if (!is.na(index)) {
       roleCSV <- gsub("\\:(.*)", "", identifier)
       role <- switch (
@@ -121,6 +131,11 @@ setContactUsingIdentifier <-
         contactDataFrame$Identifier,
         gsub("^(.*?)\\:", "", identifier)
       ))
+    if(length(index) > 1) {
+      stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in contacts.csv"))
+    } else if (length(index) == 0 || is.na(index)) {
+      stop(paste("Error:",identifier,"not found in contacts.csv"))
+    }
     if (!is.na(index)) {
       roleCSV <- gsub("\\:(.*)", "", identifier)
       role <- switch (
@@ -206,6 +221,11 @@ setObservedPropertyUsingIdentifier <- function(identifier, observedPropertyDataF
       observedPropertyDataFrame$Identifier,
       identifier)
     )
+  if(length(index) > 1) {
+    stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in observed_properties.csv"))
+  } else if (length(index) == 0 || is.na(index)) {
+    stop(paste("Error:",identifier,"not found in observed_properties.csv"))
+  }
   
   observedPropertyKeywordCSVList <- vector(mode = "list");
   keywordList <- list()
@@ -246,6 +266,11 @@ setFeatureOfInterestUsingIdentifier <- function(identifier, samplingFeatureDataF
       samplingFeatureDataFrame$Identifier,
       identifier)
     )
+  if(length(index) > 1) {
+    stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in sampling_features.csv"))
+  } else if (length(index) == 0 || is.na(index)) {
+    stop(paste("Error:",identifier,"not found in sampling_features.csv"))
+  }
   if (gsub("\\:(.*)", "", samplingFeatureDataFrame$Geometry[index]) == "wkt") {
     return(
       new("FeatureOfInterest",
@@ -295,10 +320,16 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
       sensorDataFrame$Identifier,
       gsub("\\[(.*?)\\]","",identifier))
     )
+  
+  if(length(index) > 1) {
+    stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in sensors.csv"))
+  } else if (length(index) == 0 || is.na(index)) {
+    stop(paste("Error:",identifier,"not found in sensors.csv"))
+  }
+  
   activityPeriods = str_match(identifier,pattern = "\\[(.*?)\\]")[,2]
   documents <- vector(mode = "list")
-  # (!is.na(sensorDataFrame$Documents)){
-  if (("Documents" %in% attributes(sensorDataFrame)$names) & (!is.na(sensorDataFrame$Documents))){
+  if (!is.na(sensorDataFrame$Documents[index])){
     documents = lapply(as.list(underscore_LF_separated_string_to_vector(sensorDataFrame$Documents[index])),setDocumentsUsingAtSeperatedString)
   }
  
@@ -358,6 +389,13 @@ setAdditionalValueUsingIdentifier <- function(identifier, additionalValuesDataFr
       additionalValuesDataFrame$Identifier,
       identifier)
     )
+  
+  if(length(index) > 1) {
+    stop(paste("Error:",identifier,"matches", as.character(length(index)),"differents entries in additional_values.csv"))
+  } else if (length(index) == 0 || is.na(index)) {
+    stop(paste("Error:",identifier,"not found in additional_values.csv"))
+  }
+  
   return(new("AdditionalValue",
              name=as.character(additionalValuesDataFrame$Name[index]),
              columnName=as.character(additionalValuesDataFrame$NameInDatafile[index]),
