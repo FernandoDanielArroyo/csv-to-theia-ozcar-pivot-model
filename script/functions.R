@@ -368,7 +368,7 @@ setSensorUsingIdentifier <- function(identifier, sensorDataFrame) {
 #' @export
 setDocumentsUsingAtSeperatedString <-  function(AtSeparatedString) {
   return(new("Document",
-             type=gsub("\\@(.*)","",AtSeparatedString),
+             type=firstLetterUppercase(gsub("\\@(.*)","",AtSeparatedString)),
              url=gsub("^(.*?)\\@","",AtSeparatedString))
   )
 }
@@ -471,3 +471,13 @@ setOnlineResourceUsingURLList <- function(urlList) {
   return(onlineResourceObject)
 }
 
+
+#' Transform a string by changing the first letter to uppercase
+#' @param x String
+#' @return the string with the first letter uppercase
+#' @export
+
+firstLetterUppercase <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  return(x)
+}
