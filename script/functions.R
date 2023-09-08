@@ -451,7 +451,7 @@ setOnlineResourceUsingURLList <- function(urlList) {
         onlineResourceObject@urlDownload <- gsub("(.*?)\\@", "", urlList[i])
       },
       "doi" = {
-        onlineResourceObject@doi <- gsub("(.*?)\\@(http|https)\\:\\/\\/dx\\.doi\\.org\\/", "", urlList[i])
+        onlineResourceObject@doi <- gsub("(.*?)\\@", "", urlList[i])
       },
       # default case for webservices
       {
